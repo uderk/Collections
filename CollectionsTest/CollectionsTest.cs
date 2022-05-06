@@ -4,15 +4,8 @@ namespace Tests
 {
     public class Tests
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
+       //Empty test class
+       //please add your tests about Collection.cs here 
 
-        [Test]
-        public void Test1()
-        {
-            Assert.Pass();
-        }
     }
 }

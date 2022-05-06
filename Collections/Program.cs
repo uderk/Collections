@@ -16,18 +16,13 @@ namespace Collections
             Console.WriteLine();
 
             Collection<int> nums = new Collection<int>();
-            Console.WriteLine($"Empty collection: {nums}");
+
+            nums = new Collection<int>(new int[] { 10, 20, 30, 40, 50 });
+
+            Console.WriteLine(nums);
             Console.WriteLine($"Count: {nums.Count}. Capacity: {nums.Capacity}");
             Console.WriteLine();
 
-            
-
-            nums.Add(5);
-            nums.Add(10);
-            nums.Add(15);
-            
-            Console.WriteLine(nums.Count+ " Elements are added ");
-            Console.WriteLine();
 
             Console.ReadKey();
 

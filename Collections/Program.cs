@@ -10,6 +10,9 @@ namespace Collections
     {
         static void Main(string[] args)
         {
+           
+
+            
             Console.WriteLine();
             Console.WriteLine("Collection<T> Examples");
             Console.WriteLine("======================");
@@ -69,6 +72,7 @@ namespace Collections
             Console.WriteLine();
 
             Console.ReadKey();
+            
         }
     }
 }

@@ -1,17 +1,17 @@
 using Collections;
 using NUnit.Framework;
+using System;
+using System.Linq;
 
 namespace Tests
 {
     [TestFixture]
     public class Tests
     {
-       //Empty test class
        //please add your tests about Collection.cs here 
     
-
-      [Test]
-      public void Test_Add_Three_Items()
+        [Test]
+        public void Test_Add_Three_Items()
         {
             // this works only for INT items 
 
@@ -30,8 +30,8 @@ namespace Tests
             
         } 
 
-      [Test]
-      public void Test_AddRange()
+        [Test]
+        public void Test_AddRange()
         {
             //arange 
             Collection<int> nums = new Collection<int>();
@@ -40,6 +40,21 @@ namespace Tests
             int counted = nums.Count;
             //Assert 
             Assert.AreEqual(5, nums.Count);
+        }  
+
+        [Test]
+        public void Test_AddRangeWithGrow()
+        {
+            //Arrange
+            Collection<int> nums = new Collection<int>();
+            int oldCapacity = nums.Capacity;
+            var newNums = Enumerable.Range(1000, 2000).ToArray();
+            //Act
+            nums.AddRange(newNums);
+            string expectedNums="[" +string.Join(", ",newNums)+"]";
+            //Assert
+            Assert.AreEqual(nums.ToString(), expectedNums.ToString());
+
         }
 
         [Test]
@@ -106,7 +121,81 @@ namespace Tests
             //Act
             nums.Clear();
             //Arrange
-            Assert.IsEmpty(nums.ToString()); //probably method is not correct, should be discussed 
+            Assert.That(nums.ToString(),Is.EqualTo("[]")); //test passes this way, but way is nit working with .IsEmpty?
         }
+
+        [Test]
+        public void Test_EmptyContructor()
+        {
+            Collection<int> nums = new Collection<int>();
+            //Assert
+            Assert.AreEqual(nums.ToString(), "[]");
+        }
+
+        [Test]
+        public void Test_Constructur_OneIntElement()
+        {
+            //Arrange
+            Collection<int> nums = new Collection<int>(10);
+            //Assert
+            Assert.That(nums[0], Is.EqualTo(10));
+            Assert.AreEqual(1, nums.Count);
+        }
+
+        [Test]
+        public void Test_Constructor_MultipleElements()
+        {
+            Collection<int> nums = new Collection<int>();
+            nums = new Collection<int>(new int[] { 1,2,3,4,5 });
+            //multiple Assert in for loop
+            for (int i = 0; i < nums.Count; i++)
+            {
+                Assert.AreEqual(i+1, nums[i]);
+            }
+            Assert.AreEqual(5, nums.Count);
+        }  
+
+        [Test]
+        public void Test_Constructor_String_Elements()
+        {
+            Collection<string> names = new Collection<string>("Veni", "Deni", "Mischa");
+            //Assertioins
+            Assert.That(3, Is.EqualTo(names.Count));
+            Assert.AreEqual("Veni", names[0]);
+            Assert.AreEqual("Deni", names[1]);
+            Assert.AreEqual("Mischa", names[2]);
+        } 
+
+        [Test]
+        public void Test_MixedTypeCollections()
+        {
+            //Arrange
+            Collection<string> names = new Collection<string>("Veni", "Deni", "Mischa");
+            Collection<int> nums = new Collection<int>(new int[] {1, 2, 3});
+            Collection<DateTime> dates = new Collection<DateTime>(DateTime.Today);
+            //Act
+            var mixedTypeCollection = new Collection<object>(names, nums, dates);
+            //Assert
+            Assert.That(mixedTypeCollection.ToString(),Is.EqualTo($"[[Veni, Deni, Mischa], [1, 2, 3], [{DateTime.Today.ToString()}]]"));
+        }
+
+        [Test, MaxTime(1000000)] //This test fails on the last assert, must be checked 
+        public void Test_Collection_OneMilionObjects()
+        {
+            //Arrange
+            const int objectsNumber = 1000000;
+            Collection<int> nums = new Collection<int>(new int[] { 1, 2, 3 });
+            //Act
+            nums.AddRange(Enumerable.Range(1, objectsNumber).ToArray());
+            //Assert
+            Assert.That(nums.Capacity > nums.Count);
+            for (int i = objectsNumber-1; i >=0; i--)
+            {
+                nums.RemoveAt(i);
+            }
+            Assert.That(nums.ToString(), Is.EqualTo("[]")); 
+
+        }
+
     }
 }

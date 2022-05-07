@@ -103,6 +103,9 @@ namespace Tests
         [Test]
         public void Test_RemoveAt()
         {
+            //In my opinion the RemoveAt() does not work correctly.It realy deletes the elements(see the first Assert), but it also
+            //shifted all elements to left. I want the nums(i) to be empty or [] after remove
+            //no another element
             // Arrange 
             Collection<int> nums = new Collection<int>();
             nums = new Collection<int>(new int[] { 10, 20, 30, 45, 55 });
@@ -110,6 +113,7 @@ namespace Tests
             nums.RemoveAt(1);
             //Assert
             Assert.AreNotEqual(20, nums[1]);
+            Assert.AreEqual("[]", nums[1]);
         }
 
         [Test]
@@ -180,6 +184,7 @@ namespace Tests
         }
 
         [Test, MaxTime(1000000)] //This test fails on the last assert, must be checked 
+        //MaxTime is in milisec
         public void Test_Collection_OneMilionObjects()
         {
             //Arrange
@@ -194,7 +199,6 @@ namespace Tests
                 nums.RemoveAt(i);
             }
             Assert.That(nums.ToString(), Is.EqualTo("[]")); 
-
         }
 
     }

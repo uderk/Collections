@@ -10,9 +10,27 @@ namespace Collections
     {
         static void Main(string[] args)
         {
-           
+            Console.WriteLine();
+            Console.WriteLine("Collection<T> Examples");
+            Console.WriteLine("======================");
+            Console.WriteLine();
 
-            
+            Collection<int> nums = new Collection<int>();
+
+            nums = new Collection<int>(new int[] { 10, 20, 30, 40, 50 });
+
+            Console.WriteLine(nums);
+            Console.WriteLine($"Count: {nums.Count}. Capacity: {nums.Capacity}");
+            Console.WriteLine();
+
+
+            Console.ReadKey();
+
+            /*
+             
+            I commented this stuff, because I want to try the methos one by one. 
+            To write good test it is necessary to be able to understand what the method does 
+
             Console.WriteLine();
             Console.WriteLine("Collection<T> Examples");
             Console.WriteLine("======================");
@@ -72,7 +90,7 @@ namespace Collections
             Console.WriteLine();
 
             Console.ReadKey();
-            
+            */
         }
     }
 }

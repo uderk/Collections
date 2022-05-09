@@ -9,28 +9,38 @@ namespace Tests
     public class Tests
     {
        //please add your tests about Collection.cs here 
-    
+        [OneTimeSetUp]
+        public void SetUp()
+        {
+            Console.WriteLine("Test Started" +DateTime.Now);
+        }
         [Test]
-        public void Test_Add_Three_Items()
+        [Category("Critical")]
+        public void Test_Int_Items()
         {
             // this works only for INT items 
 
             //this is arrange section
 
             Collection<int> nums = new Collection<int>();
-
+            int numberOfElements = 10;
             //Act
-            nums.Add(5);
-            nums.Add(10);
-            nums.Add(15);
+            for (int i = 0; i < numberOfElements; i++)
+            {
+                nums.Add(i);
+            }
 
-            int result = nums[0];
+           // int result = nums[0];
             //Assert
-            Assert.AreEqual(3, nums.Count);
-            
+          //  Assert.AreEqual(3, nums.Count);
+            for (int i = 0; i < numberOfElements; i++)
+            {
+                Does.Contain(i);
+            }
         } 
 
         [Test]
+        [Category("Critical")]
         public void Test_AddRange()
         {
             //arange 
@@ -39,7 +49,7 @@ namespace Tests
             nums = new Collection<int>(new int[] { 10, 20, 30,45,55 });
             int counted = nums.Count;
             //Assert 
-            Assert.AreEqual(5, nums.Count);
+            Assert.AreEqual(5, nums.Count, "Range is not added");
         }  
 
         [Test]
@@ -200,6 +210,11 @@ namespace Tests
             }
             Assert.That(nums.ToString(), Is.EqualTo("[]")); 
         }
-
+        
+        [OneTimeTearDown]
+        public void OneTimeTearDown()
+        {
+            Console.WriteLine("Test Deleted" + DateTime.Now);
+        }
     }
 }
